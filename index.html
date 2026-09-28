@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WaterWatch – Report. Monitor. Get Water.</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header><div class="nav">
+  <button class="logo" onclick="go('home')" aria-label="WaterWatch home">
+    <svg width="40" height="48" viewBox="0 0 40 48"><path d="M20 2C20 2 4 22 4 32a16 16 0 0 0 32 0C36 22 20 2 20 2z" fill="#1565c0"/><path d="M12 32a8 8 0 0 0 8 8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+    <span><b>WaterWatch</b><small>Stronger Communities. Safer Water.</small></span></button>
+  <nav class="links" id="links">
+    <button data-v="home" class="on">Home</button><button data-v="report">Report</button><button data-v="map">Map</button><button data-v="updates">Updates</button><button data-v="about">About</button>
+  </nav>
+  <div class="auth" id="auth"></div>
+  <button class="menu" onclick="document.getElementById('links').classList.toggle('open')" aria-label="Menu">☰</button>
+</div></header>
+
+<main>
+<!-- HOME -->
+<section class="view on" id="v-home">
+  <div class="hero"><div class="hero-in">
+    <div>
+      <div class="eyebrow">COMMUNITY WATER CRISIS SOLUTION</div>
+      <h1>Report. Monitor.<br>Get Water.</h1>
+      <p class="lead">WaterWatch is a web application that helps communities report water shortages, monitor water sources, and stay informed during water crises.</p>
+      <div class="cta"><button class="btn" onclick="go('report')">✎ Report a Water Issue</button><button class="btn ghost" onclick="go('map')">◎ View Water Map</button></div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="side"><div>Dashboard</div><div>Reports</div><div>Map</div><div>Announcements</div><div>Water Sources</div><div>Analytics</div></div>
+      <div class="mmap"><i style="background:var(--red);left:35%;top:25%"></i><i style="background:var(--green);left:65%;top:15%"></i><i style="background:var(--amber);left:75%;top:40%"></i><i style="background:var(--blue);left:55%;top:65%"></i><i style="background:var(--green);left:45%;top:48%"></i></div>
+      <div><b>Water Supply Status</b><div class="stat"><div class="ring"><span>78%</span></div><b style="color:var(--green)">Normal</b></div><b>Recent Reports</b>
+        <p style="margin-top:8px"><span class="dot" style="background:var(--red)"></span>No water supply</p><p style="margin-top:8px"><span class="dot" style="background:var(--amber)"></span>Low water pressure</p><p style="margin-top:8px"><span class="dot" style="background:var(--blue)"></span>Contaminated water</p></div>
+    </div>
+  </div></div>
+  <div class="features">
+    <button class="feat" onclick="go('report')"><div class="ico" style="background:#e3eefb">📢</div><h3>Report Water Shortages</h3><p>Let us know when and where water is needed. Upload photos and mark the location.</p></button>
+    <button class="feat" onclick="go('map')"><div class="ico" style="background:#e1f4e8">📍</div><h3>Interactive Water Map</h3><p>See available water sources, refilling stations, and areas experiencing shortages.</p></button>
+    <button class="feat" onclick="go('map')"><div class="ico" style="background:#e3eefb">🏛️</div><h3>Monitor Water Supply</h3><p>Track the status of reservoirs and tanks in real-time.</p></button>
+    <button class="feat" onclick="go('updates')"><div class="ico" style="background:#efe6fb">🚚</div><h3>Emergency Distribution</h3><p>Check distribution schedules and locations during water crises.</p></button>
+    <button class="feat" onclick="go('updates')"><div class="ico" style="background:#fdf1d6">🔔</div><h3>Get The Latest Updates</h3><p>Receive alerts on interruptions, shortages, and important announcements.</p></button>
+  </div>
+  <div class="how"><div class="how-in">
+    <div><div class="eyebrow" style="font-size:12px">SIMPLE STEPS. BIG IMPACT.</div><h2>How It Works</h2><p style="color:var(--mute)">Together, we can build a more resilient and water-secure community.</p></div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span>✎<h4>Report</h4><p>Submit a water issue with details and location.</p></div>
+      <div class="step"><span class="n">2</span>👤<h4>Verify</h4><p>Our team reviews and validates the report.</p></div>
+      <div class="step"><span class="n">3</span>🗺️<h4>Take Action</h4><p>The issue is marked on the map and proper response is initiated.</p></div>
+      <div class="step"><span class="n">4</span>👥<h4>Stay Informed</h4><p>Residents receive updates and distribution schedules.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- REPORT -->
+<section class="view" id="v-report"><div class="page">
+  <h2>Report a Water Issue</h2><p class="sub">Tell us what is happening and where. Reports appear on the water map.</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="msg" id="gate" style="display:none">Please <button class="txt" style="color:var(--blue);text-decoration:underline" onclick="openModal('login')">log in</button> to submit a report.</div>
+      <form id="rform" onsubmit="submitReport(event)">
+        <label for="rtype">Type of issue</label>
+        <select id="rtype"><option value="shortage">No water supply</option><option value="low">Low water pressure</option><option value="contam">Contaminated water</option></select>
+        <label for="rbrgy">Barangay</label>
+        <select id="rbrgy"></select>
+        <label for="rdesc">Details</label>
+        <textarea id="rdesc" required placeholder="What happened? Since when?"></textarea>
+        <label for="rphoto">Photo (optional)</label>
+        <input type="file" id="rphoto" accept="image/*">
+        <button class="btn" style="margin-top:18px" type="submit">Submit report</button>
+      </form>
+    </div>
+    <div class="card"><h3 style="color:var(--navy)">My reports</h3><div id="myreps"></div></div>
+  </div>
+</div></section>
+
+<!-- MAP -->
+<section class="view" id="v-map"><div class="page" style="max-width:1100px">
+  <h2>Water Map</h2><p class="sub">Click a pin to see details. Use the filters to show one kind of marker.</p>
+  <div class="chips" id="chips"></div>
+  <div class="grid2" style="grid-template-columns:2fr 1fr">
+    <div class="mapbox"><svg id="map" viewBox="0 0 600 420" role="img" aria-label="Community water map"></svg></div>
+    <div class="card" id="pininfo"><h3 style="color:var(--navy)">Details</h3><p class="sub">Select a pin on the map.</p></div>
+  </div>
+</div></section>
+
+<!-- UPDATES -->
+<section class="view" id="v-updates"><div class="page">
+  <h2>Updates</h2><p class="sub">Alerts, schedules, and announcements from your water district.</p>
+  <div class="card" style="margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap"><div class="ring"><span>78%</span></div><div><b>Reservoir level: Normal</b><br><small style="color:var(--mute)">Main tank at 78% capacity</small></div><button class="btn sm" style="margin-left:auto" onclick="toast('You will get alerts for new announcements')">Subscribe to alerts</button></div>
+  <div id="anns"></div>
+</div></section>
+
+<!-- ABOUT -->
+<section class="view" id="v-about"><div class="page">
+  <h2>About WaterWatch</h2><p class="sub">Stronger communities. Safer water.</p>
+  <div class="card"><p>WaterWatch connects residents and local water officials. Residents report shortages and contamination, officials verify them, and everyone can see what is being done on a shared map.</p>
+  <p style="margin-top:12px">This is a starter version. Data is saved in your browser only, so you can build on it with a real backend later.</p></div>
+</div></section>
+</main>
+<footer>© 2026 WaterWatch · Stronger Communities. Safer Water.</footer>
+
+<!-- LOGIN / SIGNUP -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="card">
+    <button class="x" onclick="closeModal()" aria-label="Close">×</button>
+    <h3 id="mtitle">Log in</h3>
+    <form onsubmit="doAuth(event)">
+      <div id="namebox" style="display:none"><label for="aname">Full name</label><input id="aname"></div>
+      <label for="aemail">Email</label><input id="aemail" type="email" required>
+      <label for="apass">Password</label><input id="apass" type="password" required minlength="6">
+      <div class="err" id="aerr" role="alert"></div>
+      <button class="btn" style="width:100%;justify-content:center;margin-top:8px" id="asubmit">Log in</button>
+    </form>
+    <p style="margin-top:14px;font-size:14px;text-align:center"><span id="aswitch"></span></p>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
